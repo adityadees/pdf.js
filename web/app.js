@@ -700,8 +700,8 @@ const PDFViewerApplication = {
     if (typeof PDFJSDev === "undefined" || PDFJSDev.test("GENERIC")) {
       const queryString = document.location.search.substring(1);
       const params = parseQueryString(queryString);
-      file = params.get("file") ?? AppOptions.get("defaultUrl");
-      validateFileURL(file);
+      // file = params.get("file") ?? AppOptions.get("defaultUrl");
+      // validateFileURL(file);
     } else if (PDFJSDev.test("MOZCENTRAL")) {
       file = window.location.href;
     } else if (PDFJSDev.test("CHROME")) {
@@ -1166,12 +1166,14 @@ const PDFViewerApplication = {
 
     const url = this._downloadUrl,
       filename = this._docFilename;
+
+
     try {
       this._ensureDownloadComplete();
 
       const data = await this.pdfDocument.saveDocument();
       const blob = new Blob([data], { type: "application/pdf" });
-
+      console.log(blob);
       await this.downloadManager.download(blob, url, filename, options);
     } catch (reason) {
       // When the PDF document isn't ready, or the PDF file is still
